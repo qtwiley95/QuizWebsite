@@ -1,6 +1,9 @@
 <?php
   session_start();
 
+  error_reporting(E_ALL);
+  ini_set("display_errors", 1);
+
   function add_question($subject, $question, $answer, $fake1, $fake2, $fake3)
   {
 
@@ -39,8 +42,11 @@
 
 
     $insert = "INSERT INTO 368_questions (author, subject, question, answer, fake1, fake2, fake3) VALUES ('$author','$subject','$question','$answer','$fake1','$fake2','$fake3')";
-    $conn->query($insert);
-    echo "question has been added to table 368_questions";
+    if($conn->query($insert))
+      echo "question has been added to table 368_questions";
+    else {
+        echo "question has NOT been added to table 368_questions";
+    }
 
 
     $conn -> close();
@@ -60,7 +66,7 @@
 
   function return_question($condition)
   {
-    
+
   }
 
 

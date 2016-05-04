@@ -21,14 +21,14 @@
 
 
 //display users in dropdown menu
-          <?php
+    <?php
 
-              // open mysql
-              $connection = new mysqli ("mysql.eecs.ku.edu", "qwiley", "asdf", "qwiley");                // check connection
-              if ($connection === false) {
-                echo "connect failed";
-                exit ();
-              }
+        // open mysql
+        $connection = new mysqli ("mysql.eecs.ku.edu", "qwiley", "asdf", "qwiley");                // check connection
+        if ($connection === false) {
+          echo "connect failed";
+          exit ();
+        }
 
       // get table of users
       $select = "SELECT subject FROM 368_subjects";

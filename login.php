@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-function createUser()
+function verifyUser()
 {
   $person = $_POST["name"];
   $password = $_POST["pass"];
@@ -64,7 +64,7 @@ function createUser()
 }
 
 if (isset($_POST['name']) && isset($_POST['pass'])) {
-    createUser(($_POST['name']), ($_POST['pass']));
+    verifyUser(($_POST['name']), ($_POST['pass']));
 }
 
 ?>
@@ -90,7 +90,7 @@ if (isset($_POST['name']) && isset($_POST['pass'])) {
 
 <p id="second">
 Or Create User Here:<br>
-<a href="practice.html">CREATE USER</a>
+<a href="createUser.php">CREATE USER</a>
 </p>
 
 

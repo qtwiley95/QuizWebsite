@@ -4,8 +4,15 @@
   error_reporting(E_ALL);
   ini_set("display_errors", 1);
 
-  function add_question($subject, $question, $answer, $fake1, $fake2, $fake3)
+  function add_question()
   {
+
+    $question = $_POST["question"];
+    $answer = $_POST["answer"];
+    $fake1 = $_POST["fake1"];
+    $fake2 = $_POST["fake2"];
+    $fake3 = $_POST["fake3"];
+    $subject = $_POST["subject"];
 
     function force_input($data) {
       $data = trim($data);
@@ -38,8 +45,6 @@
       exit();
     }
 
-    echo "<br>connection successful!<br>";
-
 
     $insert = "INSERT INTO 368_questions (author, subject, question, answer, fake1, fake2, fake3) VALUES ('$author','$subject','$question','$answer','$fake1','$fake2','$fake3')";
     if($conn->query($insert))
@@ -52,22 +57,71 @@
     $conn -> close();
   }
 
-  $quest = $_POST["question"];
-  $ans = $_POST["answer"];
-  $fak1 = $_POST["fake1"];
-  $fak2 = $_POST["fake2"];
-  $fak3 = $_POST["fake3"];
-  $subj = $_POST["subject"];
 
-  echo "(" . $subj . ", " . $quest . ", " . $ans . ", " . $fak1 . ", " . $fak2 . ", " . $fak3 . ")<br>";
-
-  add_question($subj, $quest, $ans, $fak1, $fak2, $fak3);
-
-
-  function return_question($condition)
-  {
-
+  if (isset($_POST['question']) && isset($_POST['answer']) && isset($_POST['fake1']) && isset($_POST['fake2']) && isset($_POST['fake3']) && isset($_POST['subject'])) {
+      add_question();
   }
+?>
 
 
- ?>
+ <DOCTYPE html>
+ <html>
+   <header>
+     <script type="text/javascript" src="practice.js"></script>
+     <link rel="stylesheet" type="text/css" href="practiceCss.css">
+   </header>
+
+ <body>
+
+   <p id="main">Add Questions</p>
+
+ <div id="myForm">
+   <form onsubmit="return checkQuestion(this)" action="add_question.php" method="post">
+   <!--  Subject: <br><input type="text" name="subject" required><br> -->
+     question: <br><input type="text" name="question" required><br>
+     correct answer: <br><input type="text" name="answer" required><br>
+     false answer 1: <br><input type="text" name="fake1" required><br>
+     false answer 2: <br><input type="text" name="fake2" required><br>
+     false answer 3: <br><input type="text" name="fake3" required><br>
+     Subject: <select name="subject">
+
+
+//display subjects in dropdown menu
+   <?php
+
+       // open mysql
+       $connection = new mysqli ("mysql.eecs.ku.edu", "qwiley", "asdf", "qwiley");                // check connection
+       if ($connection === false) {
+         echo "connect failed";
+         exit ();
+       }
+
+     // get table of users
+     $select = "SELECT subject FROM 368_subjects";
+     $result = $connection -> query ($select);
+     $num = $result -> num_rows;
+
+     // print table of users
+     for ($i = 0; $i < $num; $i++) {
+       $row = $result -> fetch_assoc ();
+       $user = $row ["subject"];
+       echo "<option value=" . $user . ">" . $user . "</option>";
+     }
+
+     // close mysql
+     $connection -> close ();
+
+         ?>
+
+     </select>
+     <button type="submit">SUBMIT</button>
+   </form>
+ </div>
+
+ <p id="second">
+   The question will be added to your list of made questions.<br>
+   <a href="index.php">Home Page</a>
+ </p>
+
+ </body>
+ </html>

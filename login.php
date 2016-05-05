@@ -64,7 +64,7 @@ function verifyUser()
 }
 
 if (isset($_POST['name']) && isset($_POST['pass'])) {
-    verifyUser(($_POST['name']), ($_POST['pass']));
+    verifyUser();
 }
 
 ?>

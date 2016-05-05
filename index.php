@@ -19,14 +19,14 @@
 
 
 <body>
-	
+
 
   <div id="main">
     in the main. this is where things will be and stuff will happen.<br>
-    <a href="add_question.html">add question to your pool</a>
+    <a href="add_question.php">add question to your pool</a>
   </div>
-  
-  
+
+
   <div id="logout">
   	logout here:<br>
     <a href="logout.php"><button type="button">LOG OUT</button></a>

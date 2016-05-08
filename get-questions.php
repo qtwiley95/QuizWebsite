@@ -1,5 +1,7 @@
 <?php
 
+if (isset($_POST["subject"]) && !empty($_POST["subject"])){
+
 $conn = new mysqli("mysql.eecs.ku.edu", "qwiley", "asdf", "qwiley");
 
 if($conn == false) {
@@ -8,21 +10,18 @@ if($conn == false) {
   exit();
 }
 
-$select = $conn->prepare("SELECT author, question, answer, fake1, fake2, fake3, id FROM 368_questions WHERE subject = ? ORDER BY RAND()");
-$select->bind_param("s", $_GET["subject"]);
-$select->execute();
-$select->bind_result($author, $questionText, $answer, $fake1, $fake2, $fake3, $id);
-
 $max_results = 1;
 if (isset($_GET["max_results"])) {
   $max_results = intval($_GET["max_results"]);
 }
 
+$select = $conn->prepare("SELECT author, question, answer, fake1, fake2, fake3, id FROM 368_questions WHERE subject = ? ORDER BY RAND() LIMIT $max_results");
+$select->bind_param("s", $_GET["subject"]);
+$select->execute();
+$select->bind_result($author, $questionText, $answer, $fake1, $fake2, $fake3, $id);
+
 $out = array("questions" => []);
 while ($select->fetch()) {
-  if (count($out["questions"]) >= $max_results) {
-    break;
-  }
 
   $question = array();
   $question["author"] = $author;
@@ -38,4 +37,7 @@ echo json_encode($out);
 $select->close();
 $conn->close();
 
+}else{
+    echo "ERROR: Bad request.";
+}
 ?>

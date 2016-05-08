@@ -12,10 +12,7 @@ $result = $conn->query("SELECT * FROM 368_subjects");
 
 $out = array("subjects" => []);
 while ($row = $result->fetch_assoc()) {
-  $out["subjects"][] = array(
-    "name" => $row["subject"],
-    "description" => $row["description"]
-  );
+  $out["subjects"][] = $row;
 }
 echo json_encode($out);
 

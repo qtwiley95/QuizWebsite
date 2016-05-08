@@ -6,6 +6,29 @@
     <meta name='viewport' content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no'>
     <title>Quiz Website</title>
     <link rel='stylesheet' href='css/bootstrap.min.css'>
+    <style>
+      .quizz-question-header {
+        text-align: center;
+        font-size: 44px;
+      }
+      .quizz-question-answer {
+        margin-left: 25px;
+        margin-bottom: 40px;
+        padding: 25px;
+        cursor: pointer;
+        background-color: #f2f2f2;
+      }
+      .quizz-question-answer-selected {
+        background-color: #008D24;
+      }
+      .quizz-question-answer-id {
+        margin-right: 25px;
+      }
+      .quizz-question-answer-answer {
+        font-size: 1.5em;
+        font-weight: bold;
+      }
+    </style>
   </head>
   <body>
     <nav class="navbar navbar-default">
@@ -16,9 +39,18 @@
       </div>
     </nav>
     <div class='container'>
-      <div id='quizwebsite-is-logged-in' class='hide'>
+      <div id='quizwebsite-subject-modal' class='hide'>
         <h1>Choose a subject</h1>
         <div id="subjects"></div>
+      </div>
+      <div id='quizwebsite-question-modal' class='hide'>
+        <div class='quizz-question-header' id="quizz-question-header"></div>
+        <div class='quizz-questions' id="quizz-questions"></div>
+        <div class="row">
+          <div class="col-md-2 col-md-offset-5">
+            <div class="btn btn-default btn-primary">Next</div>
+          </div>
+        </div>
       </div>
       <div id='quizwebsite-login' class='hide'>
         <div class='row'>
@@ -33,14 +65,16 @@
             <label for='password-input' class='control-label hide'>Password</label>
             <input type='password' class='form-control' placeholder='Password' id='password-input'>
           </div>
-          <button type='submit' class='btn btn-default hide has-spinner' id='login'>
-            <span class='spinner'><i class='icon-spin icon-refresh'></i></span>
-            Login
-          </button>
-          <button id='create-user' class='btn btn-default hide has-spinner'>
-            <span class='spinner'><i class='icon-spin icon-refresh'></i></span>
-            Create user?
-          </button>
+          <div class="row">
+            <button type='submit' class='btn btn-default hide has-spinner' id='login'>
+              <span class='spinner'><i class='icon-spin icon-refresh'></i></span>
+              Login
+            </button>
+            <button id='create-user' class='btn btn-default hide has-spinner'>
+              <span class='spinner'><i class='icon-spin icon-refresh'></i></span>
+              Create user?
+            </button>
+          </div>
           <div id="user-not-found" class="hide alert alert-danger" role="alert">
             <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
             <span class="sr-only">Error:</span>
@@ -96,15 +130,47 @@
         $('#login').removeClass('hide');
       });
 
+      var letters = ['a', 'b', 'c', 'd'];
+
+      function loadQuestion(question) {
+        $("#quizz-questions").empty();
+        question.answers.forEach(function(answer, i) {
+          var letter = letters[i];
+          $("<div class='quizz-question-answer'><span class='quizz-question-answer-id'>" + letter + ".</span><span class='quizz-question-answer-answer'>" + answer + "</span></div>")
+          .click(function() {
+            $(".quizz-question-answer").removeClass("quizz-question-answer-selected");
+            $(this).addClass("quizz-question-answer-selected");
+          })
+          .appendTo("#quizz-questions");
+        })
+        $("#quizz-question-header").text(question.question);
+      }
+
+      function practice(subject) {
+        $("#quizwebsite-subject-modal").addClass('hide');
+        $.getJSON("get-questions.php?subject=" + subject.subject)
+        .done(function(data) {
+          $("#quizwebsite-question-modal").removeClass('hide');
+          loadQuestion(data.questions[0]);
+        });
+      }
+
       function login_success() {
         $('#quizwebsite-login').addClass("hide");
-        $('#quizwebsite-is-logged-in').removeClass("hide");
+        $('#quizwebsite-subject-modal').removeClass("hide");
         $.getJSON('subjects.php')
         .done(function(data) {
+          $("#subjects").empty();
           data.subjects.forEach(function(subject) {
             $("<div class='panel panel-default'>" +
-              "<div class='panel-body'><h1>" + subject.name + "</h1></div>" +
-              "</div>").appendTo("#subjects");
+              "<div class='panel-body'>" +
+              "<h1>" + subject.subject + "</h1>" +
+              "<a class='btn btn-primary btn-lg' href='#' role='button'>Practice</a></div>" +
+              "</div></div>")
+              .click(function() {
+                practice(subject);
+              })
+              .appendTo("#subjects");
           });
         });
       }
@@ -145,13 +211,24 @@
         request.send();
       }
 
-      getStatus('GET', 'login.php', function(bool) {
-        if (!bool) {
-          $('#quizwebsite-login').removeClass('hide');
-        } else {
-          login_success();
-        }
+      function home() {
+        $('#quizwebsite-login').addClass("hide");
+        $('#quizwebsite-subject-modal').addClass("hide");
+        $('#quizwebsite-question-modal').addClass("hide");
+        getStatus('GET', 'login.php', function(bool) {
+          if (!bool) {
+            $('#quizwebsite-login').removeClass('hide');
+          } else {
+            login_success();
+          }
+        });
+      }
+
+      $("#home").click(function() {
+        home();
       });
+
+      home();
     </script>
   </body>
 </html>

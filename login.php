@@ -19,11 +19,8 @@ function send($b) {
 }
 
 if (isset($_POST["name"]) && isset($_POST["pass"])) {
-  $person = $_POST["name"];
-  $password = $_POST["pass"];
-
   $select = $conn->prepare("SELECT pass FROM 368_users WHERE user = ? LIMIT 1");
-  $select->bind_param("s", $person);
+  $select->bind_param("s", $_POST["name"]);
   $select->execute();
   $select->bind_result($pass);
   $select->fetch();
@@ -32,9 +29,9 @@ if (isset($_POST["name"]) && isset($_POST["pass"])) {
   if(!isset($pass)) {
     echo "user does not exist";
   } else {
-    if(password_verify($password, $pass) == true) {
+    if(password_verify($_POST["pass"], $pass) == true) {
   	  echo "okay";
-      $_SESSION['login'] = $person;
+      $_SESSION['login'] = $_POST["name"];
     } else {
       echo "invalid password";
     }

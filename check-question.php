@@ -1,4 +1,5 @@
 <?php
+if (isset($_POST["id"]) && !empty($_POST["id"]) && isset($_POST['answer']) && !empty($_POST["answer"])) {
 
 $conn = new mysqli("mysql.eecs.ku.edu", "qwiley", "asdf", "qwiley");
 
@@ -24,5 +25,7 @@ if ($answer == $_POST["answer"]) {
 
 $select->close();
 $conn->close();
-
+}else{
+    echo "ERROR: Bad request.";
+}
 ?>

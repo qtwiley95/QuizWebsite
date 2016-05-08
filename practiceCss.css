@@ -1,0 +1,53 @@
+@charset "utf-8";
+/* CSS Document */
+
+#myForm{
+	display: inline-block;
+	padding-left:32px;
+	font-family:Impact, Haettenschweiler, "Franklin Gothic Bold", "Arial Black", sans-serif;
+	font-size:18px;
+}
+
+#main, #second{
+	color:#7B3302;
+	font-family:Impact, Haettenschweiler, "Franklin Gothic Bold", "Arial Black", sans-serif;
+	font-size:18px;
+	text-shadow:#360404;
+}
+
+button{
+	width:100%;
+	background-color:#1FA3CB;
+}
+
+input[type=password], input[type=text]{
+	width:65%;
+	color:#0077A2;
+	border:high;
+}
+
+html{
+	background-color:#DFDFDF;
+}
+
+table, th, td{
+	width:100%;
+	border:1px solid black;
+	font-family:Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+tr:nth-child(even){
+	background-color: #00FFFF;
+}
+
+tr:hover{
+	background-color:#800080;
+}
+
+table{
+	display:inline-block;
+}
+
+input[type="text"] {
+    width: 250px;
+}

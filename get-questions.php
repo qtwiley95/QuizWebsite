@@ -1,6 +1,6 @@
 <?php
 
-if (isset($_POST["subject"]) && !empty($_POST["subject"])){
+if (isset($_GET["subject"]) && !empty($_GET["subject"])){
 
 $conn = new mysqli("mysql.eecs.ku.edu", "qwiley", "asdf", "qwiley");
 

@@ -120,7 +120,7 @@
 
  <p id="second">
    The question will be added to your list of made questions.<br>
-   <a href="index.php">Home Page</a>
+   <a href="index.html">Home Page</a>
  </p>
 
  </body>

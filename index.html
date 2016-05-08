@@ -1,0 +1,157 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no'>
+    <title>Quiz Website</title>
+    <link rel='stylesheet' href='css/bootstrap.min.css'>
+  </head>
+  <body>
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#" id="home">Home</a>
+        </div>
+      </div>
+    </nav>
+    <div class='container'>
+      <div id='quizwebsite-is-logged-in' class='hide'>
+        <h1>Choose a subject</h1>
+        <div id="subjects"></div>
+      </div>
+      <div id='quizwebsite-login' class='hide'>
+        <div class='row'>
+          <h3>You are not logged in</h3>
+        </div>
+        <form id='login-form'>
+          <div class='form-group' id='email'>
+            <label for='email-input' class='control-label hide'>Email</label>
+            <input type='email' class='form-control' placeholder='Email address' id='email-input'>
+          </div>
+          <div class='form-group hide' id='password'>
+            <label for='password-input' class='control-label hide'>Password</label>
+            <input type='password' class='form-control' placeholder='Password' id='password-input'>
+          </div>
+          <button type='submit' class='btn btn-default hide has-spinner' id='login'>
+            <span class='spinner'><i class='icon-spin icon-refresh'></i></span>
+            Login
+          </button>
+          <button id='create-user' class='btn btn-default hide has-spinner'>
+            <span class='spinner'><i class='icon-spin icon-refresh'></i></span>
+            Create user?
+          </button>
+          <div id="user-not-found" class="hide alert alert-danger" role="alert">
+            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+            <span class="sr-only">Error:</span>
+            Couldn't find user
+          </div>
+          <div id="bad-password" class="hide alert alert-danger" role="alert">
+            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+            <span class="sr-only">Error:</span>
+            Bad password
+          </div>
+          <div id="already-exists" class="hide alert alert-danger" role="alert">
+            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+            <span class="sr-only">Error:</span>
+            User already exists
+          </div>
+        </form>
+      </div>
+    </div>
+    <script src='js/jquery-2.2.3.min.js'></script>
+    <script src='js/bootstrap.min.js'></script>
+    <script>
+      $("#home").click(function(event) {
+        event.preventDefault();
+      });
+
+      $('#create-user').click(function(event) {
+        $('#create-user').addClass('active');
+        $.post('create-user.php', {
+          name: $('#email-input').val(),
+          pass: $('#password-input').val()
+        }).done(function(data) {
+          $('#create-user').removeClass('active');
+          if (data == 'okay') {
+            $('#login').addClass('active');
+            login();
+          } else if (data == 'user already exists'){
+            $('#already-exists').removeClass('hide');
+          }
+        });
+      });
+
+      $('#email-input').focus(function(event) {
+        $('#create-user').addClass('hide');
+        $("#user-not-found").addClass('hide');
+        $("#bad-password").addClass('hide');
+        $('#already-exists').addClass('hide');
+        $('#password').removeClass('hide');
+      });
+
+      $('#password-input').focus(function(event) {
+        $("#user-not-found").addClass('hide');
+        $('#bad-password').addClass('hide');
+        $('#login').removeClass('hide');
+      });
+
+      function login_success() {
+        $('#quizwebsite-login').addClass("hide");
+        $('#quizwebsite-is-logged-in').removeClass("hide");
+        $.getJSON('subjects.php')
+        .done(function(data) {
+          data.subjects.forEach(function(subject) {
+            $("<div class='panel panel-default'>" +
+              "<div class='panel-body'><h1>" + subject.name + "</h1></div>" +
+              "</div>").appendTo("#subjects");
+          });
+        });
+      }
+
+      function login() {
+        $('#login').addClass('active');
+        $.post('login.php', {
+          name: $('#email-input').val(),
+          pass: $('#password-input').val()
+        }).done(function(data) {
+          $('#login').removeClass('active');
+          if (data == 'okay') {
+            login_success();
+          } else if (data == 'user does not exist') {
+            $('#create-user').removeClass('hide');
+          } else if (data == 'invalid password') {
+            $('#bad-password').removeClass('hide');
+          }
+        });
+      }
+
+      $('#login-form').submit(function(event) {
+        event.preventDefault();
+        login();
+      });
+
+      function getStatus(method, url, cb) {
+        var request = new XMLHttpRequest();
+        request.onreadystatechange = function() {
+          if (this.readyState == this.DONE && request.status == 200) {
+            if (this.responseText == 'true')
+              cb(true);
+            else if (this.responseText == 'false')
+              cb(false);
+          }
+        };
+        request.open(method, url);
+        request.send();
+      }
+
+      getStatus('GET', 'login.php', function(bool) {
+        if (!bool) {
+          $('#quizwebsite-login').removeClass('hide');
+        } else {
+          login_success();
+        }
+      });
+    </script>
+  </body>
+</html>

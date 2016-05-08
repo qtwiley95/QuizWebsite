@@ -9,21 +9,18 @@ if($conn == false) {
 }
 
 if (isset($_POST["name"]) && isset($_POST["pass"])) {
-  $person = $_POST["name"];
-  $passwordFromPost = $_POST["pass"];
-
-  $hashed = password_hash($passwordFromPost, PASSWORD_BCRYPT, [
+  $hashed = password_hash($_POST["pass"], PASSWORD_BCRYPT, [
     'cost' => 11,
   ]);
 
   $select = $conn->prepare("SELECT * FROM 368_users WHERE user = ?");
-  $select->bind_param("s", $person);
+  $select->bind_param("s", $_POST["name"]);
   $select->execute();
   $select->store_result();
 
   if($select->num_rows == 0) {
     $insert = $conn->prepare("INSERT INTO 368_users (user, pass) VALUES (?, ?)");
-    $insert->bind_param("ss", $person, $hashed);
+    $insert->bind_param("ss", $_POST["name"], $hashed);
     $result = $insert->execute();
     $insert->close();
 
@@ -32,6 +29,7 @@ if (isset($_POST["name"]) && isset($_POST["pass"])) {
     echo "user already exists";
   }
 
+  $select->free_result();
   $select->close();
 } else {
   echo "fail";

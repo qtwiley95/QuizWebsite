@@ -21,6 +21,9 @@
       .quizz-question-answer-selected {
         background-color: #008D24;
       }
+      .quizz-question-answer-wrong {
+        background-color: #B93400;
+      }
       .quizz-question-answer-id {
         margin-right: 25px;
       }
@@ -58,7 +61,8 @@
         <div class='quizz-questions' id="quizz-questions"></div>
         <div class="row">
           <div class="col-md-2 col-md-offset-5">
-            <div class="btn btn-default btn-primary">Next</div>
+            <div id="check" class="btn btn-default btn-lg btn-primary">Check <i class="glyphicon glyphicon-thumbs-up button-icon"></i></div>
+            <div id="next" class="btn btn-default btn-primary btn-lg hide">Next <i class="glyphicon glyphicon-circle-arrow-right button-icon"></i></div>
           </div>
         </div>
       </div>
@@ -110,6 +114,7 @@
         event.preventDefault();
       });
 
+      $("#create-user").off("click");
       $('#create-user').click(function(event) {
         $('#create-user').addClass('active');
         $.post('create-user.php', {
@@ -142,27 +147,59 @@
 
       var letters = ['a', 'b', 'c', 'd'];
 
-      function loadQuestion(question) {
-        $("#quizz-questions").empty();
-        question.answers.forEach(function(answer, i) {
-          var letter = letters[i];
-          $("<div class='quizz-question-answer'><span class='quizz-question-answer-id'>" + letter + ".</span><span class='quizz-question-answer-answer'>" + answer + "</span></div>")
-          .click(function() {
-            $(".quizz-question-answer").removeClass("quizz-question-answer-selected");
-            $(this).addClass("quizz-question-answer-selected");
-          })
-          .appendTo("#quizz-questions");
-        })
-        $("#quizz-question-header").text(question.question);
-      }
-
       function practice(subject) {
-        $("#quizwebsite-subject-modal").addClass('hide');
-        $.getJSON("get-questions.php?subject=" + subject.subject)
-        .done(function(data) {
-          $("#quizwebsite-question-modal").removeClass('hide');
-          loadQuestion(data.questions[0]);
+        function nextQuestion() {
+          $("#check").removeClass('hide');
+          $("#next").addClass('hide');
+          $("#quizwebsite-subject-modal").addClass('hide');
+          $.getJSON("get-questions.php?subject=" + subject.subject)
+          .done(function(data) {
+            $("#quizwebsite-question-modal").removeClass('hide');
+            loadQuestion(data.questions[0]);
+          });
+        }
+
+        $("#next").off("click");
+        $("#next").click(function() {
+          nextQuestion();
         });
+
+        function loadQuestion(question) {
+          $("#check").off("click");
+          $("#check").click(function() {
+            var answer = $(".quizz-question-answer-selected .quizz-question-answer-answer").first().text();
+            $.post("check-question.php", {id: question.id, answer: answer}, function(data) {
+              if (data.success) {
+                $("#next").removeClass("hide");
+                $("#check").addClass("hide");
+                $("<i class='glyphicon glyphicon-ok-circle answer-icon'></i>")
+                  .appendTo(".quizz-question-answer-selected");
+              } else {
+                $("<i class='glyphicon glyphicon-remove-circle answer-icon'></i>")
+                  .appendTo(".quizz-question-answer-selected");
+                $(".quizz-question-answer-selected").addClass("quizz-question-answer-wrong");
+                $(".quizz-question-answer-selected").removeClass("quizz-question-answer-selected")
+              }
+            }, "json");
+          })
+
+          $("#quizz-questions").empty();
+          question.answers.forEach(function(answer, i) {
+            var letter = letters[i];
+            $("<div class='quizz-question-answer'>" +
+              "<span class='quizz-question-answer-id'>" + letter +
+              ".</span><span class='quizz-question-answer-answer'>" + answer +
+              "</span></div>")
+            .click(function() {
+              $(".quizz-question-answer").removeClass("quizz-question-answer-selected");
+              $(this).addClass("quizz-question-answer-selected");
+            })
+            .appendTo("#quizz-questions");
+          });
+          $("#quizz-question-header").text(question.question);
+        }
+
+        nextQuestion();
       }
 
       function login_success() {

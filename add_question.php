@@ -97,7 +97,6 @@
  <DOCTYPE html>
  <html>
    <header>
-     <script type="text/javascript" src="practice.js"></script>
      <link rel="stylesheet" type="text/css" href="practiceCss.css">
    </header>
 

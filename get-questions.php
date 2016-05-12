@@ -22,7 +22,6 @@ $select->bind_result($author, $questionText, $answer, $fake1, $fake2, $fake3, $i
 
 $out = array("questions" => []);
 while ($select->fetch()) {
-
   $question = array();
   $question["author"] = $author;
   $question["question"] = $questionText;

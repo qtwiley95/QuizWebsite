@@ -31,7 +31,7 @@ if (isset($_POST["name"]) && isset($_POST["pass"])) {
   } else {
     if(password_verify($_POST["pass"], $pass) == true) {
   	  echo "okay";
-      $_SESSION['login'] = $_POST["name"];
+      $_SESSION["login"] = $_POST["name"];
     } else {
       echo "invalid password";
     }

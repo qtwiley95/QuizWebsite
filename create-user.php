@@ -10,7 +10,7 @@ if($conn == false) {
 
 if (isset($_POST["name"]) && isset($_POST["pass"])) {
   $hashed = password_hash($_POST["pass"], PASSWORD_BCRYPT, [
-    'cost' => 11,
+    "cost" => 11,
   ]);
 
   $select = $conn->prepare("SELECT * FROM 368_users WHERE user = ?");

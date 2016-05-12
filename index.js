@@ -161,6 +161,10 @@ function getStatus(method, url, cb) {
 }
 
 function home() {
+  $.getJSON('user.php')
+  .done(function(data) {
+    $('#score').text(Math.round(data.correct / (data.correct + data.incorrect) * 100) + '% correct');
+  });
   $('#quizwebsite-login').addClass('hide');
   $('#quizwebsite-subject-modal').addClass('hide');
   $('#quizwebsite-question-modal').addClass('hide');

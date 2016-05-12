@@ -11,11 +11,9 @@ if (isset($_GET["subject"]) && !empty($_GET["subject"])) {
     $max_results = intval($_GET["max_results"]);
   }
 
-  $out = getQuestion($_GET["subject"], $max_results);
-
   header('Content-Type: application/json');
 
-  echo json_encode($out);
+  echo json_encode(getQuestion($_GET["subject"], $max_results));
 } else {
   echo "ERROR: Bad request.";
 }

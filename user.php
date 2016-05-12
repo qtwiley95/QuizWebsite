@@ -21,7 +21,7 @@ $select->bind_result($incorrect_answers, $correct_answers);
 $select->fetch();
 $select->close();
 
-$out = array("correct" => $correct_answers, "incorrect" => $incorrect_answers);
+$out = array("correct" => $correct_answers, "incorrect" => $incorrect_answers, "user" => $_SESSION["login"]);
 
 header('Content-Type: application/json');
 echo json_encode($out);

@@ -192,6 +192,7 @@ function home() {
   $.getJSON('user.php')
   .done(function(data) {
     $('#score').text(Math.round(data.correct / (data.correct + data.incorrect) * 100) + '% correct');
+    $('#user-name-nav').text(data.user);
   });
 }
 

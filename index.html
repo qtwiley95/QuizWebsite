@@ -48,6 +48,7 @@
         <div class="navbar-header">
           <a class="navbar-brand" href="#" id="home">QuizzWebsite</a>
           <a class="navbar-brand" href="add_question.php">Admin Editor</a>
+          <span class="navbar-brand" id="score"></span>
         </div>
       </div>
     </nav>
@@ -169,6 +170,7 @@
           $("#check").click(function() {
             var answer = $(".quizz-question-answer-selected .quizz-question-answer-answer").first().text();
             $.post("check-question.php", {id: question.id, answer: answer}, function(data) {
+              $("#score").text(Math.round(data.correct / (data.correct + data.incorrect) * 100) + "% correct");
               if (data.success) {
                 $("#next").removeClass("hide");
                 $("#check").addClass("hide");

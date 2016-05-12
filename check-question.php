@@ -35,7 +35,14 @@ if (isset($_POST["id"]) && !empty($_POST["id"]) && isset($_POST['answer']) && !e
     $update->close();
   }
 
-  $out = array("success" => $isCorrect);
+  $select = $conn->prepare("SELECT incorrect_answers, correct_answers FROM 368_users WHERE user = ?");
+  $select->bind_param("s", $_SESSION["login"]);
+  $select->execute();
+  $select->bind_result($incorrect_answers, $correct_answers);
+  $select->fetch();
+  $select->close();
+
+  $out = array("success" => $isCorrect, "correct" => $correct_answers, "incorrect" => $incorrect_answers);
   echo json_encode($out);
 
   $conn->close();

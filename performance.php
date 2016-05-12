@@ -49,8 +49,20 @@
       <div class="container-fluid">
         <div class="navbar-header">
           <a class="navbar-brand" href="." id="home">QuizzWebsite</a>
-          <a class="navbar-brand" href="add_question.php">Admin Editor</a>
         </div>
+        <ul class="nav navbar-nav navbar-left">
+          <li><a href="add_question.php">Add Question</a></li>
+          <li><a href="delete_subject.php">Delete Subject</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <li><a id="score" href="performance.php"></a></li>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span id="user-name-nav"></span><span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a href="logout.php">Log out</a></li>
+            </ul>
+          </li>
+        </ul>
       </div>
     </nav>
     <div class='container'>

@@ -20,3 +20,11 @@ queries mysql for questions in specified subject and Limits result to either $am
 RETURN:
 array containing arrays that have "question", "author", "id", and "answers"
   where question is a string, author is a string, id is an int, and answers is an array of strings indexed 0-3 inclusive.
+
+deleteSubject($subject)
+PRE:
+call with a parameter subject.
+POST:
+deletes subject from 368_subjects, and all questions in 368_questions with $subject as the subject.
+RETURN:
+none.

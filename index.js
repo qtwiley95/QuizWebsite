@@ -35,7 +35,7 @@ $('#password-input').focus(function(event) {
 
 var letters = 'abcdefghijklmnopqrstuvwxyz';
 
-function practice(subject) {
+function practice(subject, max_results) {
   var questions = [];
 
   function nextQuestion() {
@@ -92,7 +92,7 @@ function practice(subject) {
     $('#quizz-question-header').text(question.question);
   }
 
-  $.getJSON('get-questions.php?max_results=5&subject=' + subject.subject)
+  $.getJSON('get-questions.php?max_results=' + max_results + '&subject=' + subject.subject)
   .done(function(data) {
     questions = data.questions;
     if (questions.length == 0) {
@@ -111,15 +111,36 @@ function login_success() {
   .done(function(data) {
     $('#subjects').empty();
     data.subjects.forEach(function(subject) {
-      $('<div class="panel panel-default">' +
-        '<div class="panel-body">' +
+      var el = $('<div class="panel-body">' +
         '<h1>' + subject.subject + '</h1>' +
-        '<a class="btn btn-primary btn-lg" href="#" role="button">Practice</a></div>' +
-        '</div></div>')
-        .click(function() {
-          practice(subject);
-        })
-        .appendTo('#subjects');
+        '</div>'
+      );
+      $('<div class="btn-group" role="group"></div>')
+        .append($('<button type="button" class="btn btn-lg">Practice x1</button>')
+          .css('color', '#FFFFFF')
+          .css('background-color', '#F0AD4E')
+          .css('border-color', '#EEA236')
+          .click(function() {
+            practice(subject, 1);
+          })
+        ).appendTo(el);
+      $('<div class="btn-group" role="group"></div>')
+      $('<div class="btn-group" role="group"></div>')
+        .append($('<button type="button" class="btn btn-primary btn-lg">Practice x5</button>')
+          .click(function() {
+            practice(subject, 5);
+          })
+        ).appendTo(el);
+      $('<div class="btn-group" role="group"></div>')
+        .append($('<button type="button" class="btn btn-lg">Practice x10</button>')
+          .css('color', '#FFFFFF')
+          .css('background-color', '#C9302C')
+          .css('border-color', '#AC2925')
+          .click(function() {
+            practice(subject, 10);
+          })
+        ).appendTo(el);
+      $('<div class="panel panel-default"></div>').append(el).appendTo('#subjects');
     });
   });
 }

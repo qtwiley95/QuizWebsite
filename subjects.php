@@ -14,6 +14,8 @@ $out = array("subjects" => []);
 while ($row = $result->fetch_assoc()) {
   $out["subjects"][] = $row;
 }
+
+header('Content-Type: application/json');
 echo json_encode($out);
 
 $result->close();

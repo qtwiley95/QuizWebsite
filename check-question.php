@@ -43,6 +43,8 @@ if (isset($_POST["id"]) && !empty($_POST["id"]) && isset($_POST['answer']) && !e
   $select->close();
 
   $out = array("success" => $isCorrect, "correct" => $correct_answers, "incorrect" => $incorrect_answers);
+
+  header('Content-Type: application/json');
   echo json_encode($out);
 
   $conn->close();

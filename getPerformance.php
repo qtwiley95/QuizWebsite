@@ -10,14 +10,12 @@ if($conn == false) {
   exit();
 }
 
-$result = $conn->query("SELECT correct_answers, incorrect_answers FROM 368_users WHERE user = '".$_SESSION['user']."'");
+$result = $conn->query("SELECT correct_answers, incorrect_answers FROM 368_users WHERE user = '".$_SESSION["login"]."'");
 
 $row = $result->fetch_assoc();
 $performanceCorrect = $row["correct_answers"];
 $performanceIncorrect = $row["incorrect_answers"];
-
 $result->close();
 
 $conn->close();
-
 ?>

@@ -69,7 +69,7 @@ function practice(subject) {
           $('<i class="glyphicon glyphicon-ok-circle answer-icon"></i>')
             .appendTo('.quizz-question-answer-selected');
         } else {
-          $('<i class='glyphicon glyphicon-remove-circle answer-icon'></i>')
+          $('<i class="glyphicon glyphicon-remove-circle answer-icon"></i>')
             .appendTo('.quizz-question-answer-selected');
           $('.quizz-question-answer-selected')
             .addClass('quizz-question-answer-wrong')

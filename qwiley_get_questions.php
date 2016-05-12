@@ -1,8 +1,8 @@
 <?php
 //takes in a subject and how many questions to retrieve as parameter then
 //  queries database and returns an array with x random questions from the database
-//  it will retrieve as many as it can without over drawing. so it will always return
-// x <= number of questions to retrieve
+//  it will retrieve as many as it can without over drawing. so it will always return x
+// where x <= number of questions to retrieve
 function getQuestion($subject,$amountOfQuestions){
   // open mysql
   $connection = new mysqli ("mysql.eecs.ku.edu", "qwiley", "asdf", "qwiley");

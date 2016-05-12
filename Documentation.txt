@@ -1,0 +1,22 @@
+Quinton Wiley:
+
+add_question()
+PRE:
+must have $_POST variables for question, answer, fake1, fake2, fake3, subject
+(this could be done as parameters, but we have it on the same page as form, so it is unneeded)
+user must be logged in, this ensures $_SESSION['login'] is set
+POST:
+updates mysql database table 368_questions to contain all information
+information=(question, answer, fake1, fake2, fake3, author, subject, id(auto_inc))
+RETURN:
+none.
+
+getQuestion($subject, $amountOfQuestions)
+PRE:
+must be called with a subject for questions to be pulled, and how many questions to pull
+POST:
+queries mysql for questions in specified subject and Limits result to either $amountOfQuestions
+  or to how many questions there are of that subject in database.
+RETURN:
+array containing arrays that have "question", "author", "id", and "answers"
+  where question is a string, author is a string, id is an int, and answers is an array of strings indexed 0-3 inclusive.

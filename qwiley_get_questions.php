@@ -51,6 +51,4 @@ function getQuestion($subject,$amountOfQuestions)
   return $out;
 }
 
-print_r(getQuestion("biology",2));
-
  ?>

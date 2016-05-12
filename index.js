@@ -1,7 +1,4 @@
-$('#home').click(function(event) {
-  event.preventDefault();
-});
-
+// post to create-user.php on create user
 $('#create-user').off('click');
 $('#create-user').click(function(event) {
   $('#create-user').addClass('active');
@@ -19,6 +16,7 @@ $('#create-user').click(function(event) {
   });
 });
 
+// used for fosucing in on inputs as needed
 $('#email-input').focus(function(event) {
   $('#create-user').addClass('hide');
   $('#user-not-found').addClass('hide');
@@ -27,6 +25,7 @@ $('#email-input').focus(function(event) {
   $('#password').removeClass('hide');
 });
 
+// used for fosucing in on inputs as needed
 $('#password-input').focus(function(event) {
   $('#user-not-found').addClass('hide');
   $('#bad-password').addClass('hide');
@@ -35,6 +34,7 @@ $('#password-input').focus(function(event) {
 
 var letters = 'abcdefghijklmnopqrstuvwxyz';
 
+// called to practice a subject
 function practice(subject, max_results) {
   var questions = [];
 
@@ -46,6 +46,7 @@ function practice(subject, max_results) {
     if (questions.length > 0) {
       loadQuestion(questions.pop());
     } else {
+      // TODO: add status page?
       home();
     }
   }
@@ -106,6 +107,7 @@ function practice(subject, max_results) {
   });
 }
 
+// called when user has successfully logged in
 function login_success() {
   $('#quizwebsite-login').addClass('hide');
   $('#quizwebsite-subject-modal').removeClass('hide');
@@ -148,6 +150,7 @@ function login_success() {
   });
 }
 
+// called to login
 function login() {
   $('#login').addClass('active');
   $.post('login.php', {
@@ -165,43 +168,36 @@ function login() {
   });
 }
 
+// called when login form is submitted
 $('#login-form').submit(function(event) {
   event.preventDefault();
   login();
 });
 
-function getStatus(method, url, cb) {
-  var request = new XMLHttpRequest();
-  request.onreadystatechange = function() {
-    if (this.readyState == this.DONE && request.status == 200) {
-      if (this.responseText == 'true')
-        cb(true);
-      else if (this.responseText == 'false')
-        cb(false);
-    }
-  };
-  request.open(method, url);
-  request.send();
-}
-
+// open home page of subjects
 function home() {
+  $('#quizwebsite-login').addClass('hide');
+  $('#quizwebsite-subject-modal').addClass('hide');
+  $('#quizwebsite-question-modal').addClass('hide');
+
+  $.get('login.php')
+    .done(function (data) {
+      if (data == 'false') {
+        $('#quizwebsite-login').removeClass('hide');
+      } else if (data == 'true') {
+        login_success();
+      }
+    });
+
   $.getJSON('user.php')
   .done(function(data) {
     $('#score').text(Math.round(data.correct / (data.correct + data.incorrect) * 100) + '% correct');
   });
-  $('#quizwebsite-login').addClass('hide');
-  $('#quizwebsite-subject-modal').addClass('hide');
-  $('#quizwebsite-question-modal').addClass('hide');
-  getStatus('GET', 'login.php', function(bool) {
-    if (!bool) {
-      $('#quizwebsite-login').removeClass('hide');
-    } else {
-      login_success();
-    }
-  });
 }
 
+// home link on toolbar
 $('#home').click(function() {
+  event.preventDefault()
   home();
 });
 

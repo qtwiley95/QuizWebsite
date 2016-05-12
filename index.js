@@ -84,8 +84,10 @@ function practice(subject, max_results) {
         '.</span><span class="quizz-question-answer-answer">' + answer +
         '</span></div>')
       .click(function() {
-        $('.quizz-question-answer').removeClass('quizz-question-answer-selected');
-        $(this).addClass('quizz-question-answer-selected');
+        if (!$('#check').hasClass('hide') && !$(this).hasClass('quizz-question-answer-wrong')) {
+          $('.quizz-question-answer').removeClass('quizz-question-answer-selected');
+          $(this).addClass('quizz-question-answer-selected');
+        }
       })
       .appendTo('#quizz-questions');
     });

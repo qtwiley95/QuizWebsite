@@ -106,6 +106,7 @@ function practice(subject, max_results) {
       home();
       alert("no questions for that subject");
     } else {
+      max_results = questions.length;
       nextQuestion();
     }
   });

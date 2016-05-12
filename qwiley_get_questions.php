@@ -3,9 +3,7 @@
 //  queries database and returns an array with x random questions from the database
 //  it will retrieve as many as it can without over drawing. so it will always return
 // x <= number of questions to retrieve
-function getQuestion($subject,$amountOfQuestions)
-{
-
+function getQuestion($subject,$amountOfQuestions){
   // open mysql
   $connection = new mysqli ("mysql.eecs.ku.edu", "qwiley", "asdf", "qwiley");
   // check connection
@@ -27,6 +25,7 @@ function getQuestion($subject,$amountOfQuestions)
   $query = "SELECT * FROM 368_questions WHERE subject = '$subject' ORDER BY RAND() LIMIT $amountOfQuestions";
   $result = $connection->query($query);
   $num = $result -> num_rows;
+  //prints error if nothing found
   if(!$result){
     echo "Question Not Found<br>";
     exit;
@@ -50,5 +49,4 @@ function getQuestion($subject,$amountOfQuestions)
 //return array containing arrays that has question, author, id, and an array of answers
   return $out;
 }
-
  ?>

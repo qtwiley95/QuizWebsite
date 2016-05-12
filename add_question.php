@@ -75,9 +75,9 @@
     }
 
     if($boolAnswer){
-      $insert = "INSERT INTO subjects (user_id) VALUES ('$subject')";
+      //$insert = "INSERT INTO subjects (user_id) VALUES ('$subject')";
       $insert2 = "INSERT INTO 368_subjects (subject) VALUES ('$subject')";
-      $conn->query($insert);
+      //$conn->query($insert);
       $conn->query($insert2);
     }
     //end checking

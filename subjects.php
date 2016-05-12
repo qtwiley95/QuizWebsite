@@ -1,5 +1,8 @@
 <?php
 
+error_reporting(E_ALL);
+ini_set("display_errors", 1);
+
 $conn = new mysqli("mysql.eecs.ku.edu", "qwiley", "asdf", "qwiley");
 
 if($conn == false) {
@@ -14,6 +17,8 @@ $out = array("subjects" => []);
 while ($row = $result->fetch_assoc()) {
   $out["subjects"][] = $row;
 }
+
+header('Content-Type: application/json');
 echo json_encode($out);
 
 $result->close();

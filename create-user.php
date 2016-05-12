@@ -1,5 +1,8 @@
 <?php
 
+error_reporting(E_ALL);
+ini_set("display_errors", 1);
+
 $conn = new mysqli("mysql.eecs.ku.edu", "qwiley", "asdf", "qwiley");
 
 if($conn == false) {
@@ -10,7 +13,7 @@ if($conn == false) {
 
 if (isset($_POST["name"]) && isset($_POST["pass"])) {
   $hashed = password_hash($_POST["pass"], PASSWORD_BCRYPT, [
-    'cost' => 11,
+    "cost" => 11,
   ]);
 
   $select = $conn->prepare("SELECT * FROM 368_users WHERE user = ?");
@@ -18,6 +21,7 @@ if (isset($_POST["name"]) && isset($_POST["pass"])) {
   $select->execute();
   $select->store_result();
 
+  // ideally send an email to confirm the owner...
   if($select->num_rows == 0) {
     $insert = $conn->prepare("INSERT INTO 368_users (user, pass) VALUES (?, ?)");
     $insert->bind_param("ss", $_POST["name"], $hashed);

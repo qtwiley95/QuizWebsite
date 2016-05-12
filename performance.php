@@ -67,7 +67,7 @@
         var data = google.visualization.arrayToDataTable([
           ['Performance', '#'],
           ['Correct',     <?php echo $performanceCorrect; ?>],
-          ['Incorrect',   <?php echo $performanceCorrect; ?>],
+          ['Incorrect',   <?php echo $performanceIncorrect; ?>],
         ]);
 
         var options = {

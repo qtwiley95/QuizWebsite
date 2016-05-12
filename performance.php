@@ -48,7 +48,7 @@
     <nav class="navbar navbar-default">
       <div class="container-fluid">
         <div class="navbar-header">
-          <a class="navbar-brand" href="#" id="home">QuizzWebsite</a>
+          <a class="navbar-brand" href="." id="home">QuizzWebsite</a>
           <a class="navbar-brand" href="add_question.php">Admin Editor</a>
         </div>
       </div>
@@ -67,7 +67,7 @@
         var data = google.visualization.arrayToDataTable([
           ['Performance', '#'],
           ['Correct',     <?php echo $performanceCorrect; ?>],
-          ['Incorrect',   <?php echo $performanceInorrect; ?>],
+          ['Incorrect',   <?php echo $performanceIncorrect; ?>],
         ]);
 
         var options = {

@@ -17,7 +17,7 @@ if (isset($_POST["id"]) && !empty($_POST["id"]) && isset($_POST['answer']) && !e
   	 $isCorrect = validateAnswer($db,$questionId,$givenAnswer);
  	 $isCorrect ? addCorrect($db,$_SESSION["login"]) : addIncorrect($db,$_SESSION["login"]);
  	 $performance = getPerformance($db,$_SESSION["login"]);
- 	 $out = array("success" => $isCorrect, "correct" => $performance["correct_answers"], "incorrect" => $performance["incorrect_answers"]);
+ 	 $out = array("success" => $isCorrect, "correct" => intval($performance["correct_answers"]), "incorrect" => intval($performance["incorrect_answers"]));
  	 return $out;
   }
 

@@ -54,6 +54,32 @@
     }
 
 
+    //check if subject exists in database [subjects]
+    $subject = $_POST["subject"];
+    echo "<br>". $subject;
+    $check = "SELECT user_id FROM subjects";
+    $boolAnswer = true;
+    if($result = $conn->query($check)){
+      while($row = $result -> fetch_assoc ()){
+        $subject_name = $row ["user_id"];
+        echo $subject_name;
+        if($subject_name == $subject){
+          $boolAnswer = false;
+        }
+      }
+    }
+
+    if($boolAnswer){
+      $insert = "INSERT INTO subjects (user_id) VALUES ('$subject')";
+      $insert2 = "INSERT INTO 368_subjects (subject) VALUES ('$subject')";
+      if($conn->query($insert))
+        echo "Subject inserted!";
+      if($conn->query($insert2))
+        echo "Subject inserted! (2)";
+    }
+    //end checking
+
+
     $conn -> close();
   }
 
@@ -83,12 +109,12 @@
      false answer 1: <br><input type="text" name="fake1" required><br>
      false answer 2: <br><input type="text" name="fake2" required><br>
      false answer 3: <br><input type="text" name="fake3" required><br>
-     Subject: <select name="subject">
+     Enter subject: <br><input type="text" name="subject" required><br>
 
 
-//display subjects in dropdown menu
    <?php
-
+       //display subjects in dropdown menu
+       echo "Current subjects in database: ";
        // open mysql
        $connection = new mysqli ("mysql.eecs.ku.edu", "qwiley", "asdf", "qwiley");                // check connection
        if ($connection === false) {
@@ -105,7 +131,7 @@
      for ($i = 0; $i < $num; $i++) {
        $row = $result -> fetch_assoc ();
        $user = $row ["subject"];
-       echo "<option value=" . $user . ">" . $user . "</option>";
+       echo ($i+1). ". ". $user. " ";
      }
 
      // close mysql
@@ -113,7 +139,6 @@
 
          ?>
 
-     </select>
      <button type="submit">SUBMIT</button>
    </form>
  </div>

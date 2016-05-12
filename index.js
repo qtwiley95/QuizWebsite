@@ -38,6 +38,8 @@ var letters = 'abcdefghijklmnopqrstuvwxyz';
 function practice(subject, max_results) {
   var questions = [];
 
+  var n = 0;
+
   function nextQuestion() {
     $('#check').removeClass('hide');
     $('#next').addClass('hide');
@@ -45,6 +47,8 @@ function practice(subject, max_results) {
     $('#quizwebsite-question-modal').removeClass('hide');
     if (questions.length > 0) {
       loadQuestion(questions.pop());
+      n+=1;
+      $("#question-nums").text(n + " of " + max_results + " questions");
     } else {
       // TODO: add status page?
       home();

@@ -35,7 +35,7 @@ $('#password-input').focus(function(event) {
 
 var letters = 'abcdefghijklmnopqrstuvwxyz';
 
-function practice(subject) {
+function practice(subject, max_results) {
   var questions = [];
 
   function nextQuestion() {
@@ -84,15 +84,17 @@ function practice(subject) {
         '.</span><span class="quizz-question-answer-answer">' + answer +
         '</span></div>')
       .click(function() {
-        $('.quizz-question-answer').removeClass('quizz-question-answer-selected');
-        $(this).addClass('quizz-question-answer-selected');
+        if (!$('#check').hasClass('hide') && !$(this).hasClass('quizz-question-answer-wrong')) {
+          $('.quizz-question-answer').removeClass('quizz-question-answer-selected');
+          $(this).addClass('quizz-question-answer-selected');
+        }
       })
       .appendTo('#quizz-questions');
     });
     $('#quizz-question-header').text(question.question);
   }
 
-  $.getJSON('get-questions.php?max_results=5&subject=' + subject.subject)
+  $.getJSON('get-questions.php?max_results=' + max_results + '&subject=' + subject.subject)
   .done(function(data) {
     questions = data.questions;
     if (questions.length == 0) {
@@ -111,15 +113,37 @@ function login_success() {
   .done(function(data) {
     $('#subjects').empty();
     data.subjects.forEach(function(subject) {
-      $('<div class="panel panel-default">' +
-        '<div class="panel-body">' +
+      var el = $('<div class="panel-body">' +
         '<h1>' + subject.subject + '</h1>' +
-        '<a class="btn btn-primary btn-lg" href="#" role="button">Practice</a></div>' +
-        '</div></div>')
-        .click(function() {
-          practice(subject);
-        })
-        .appendTo('#subjects');
+        '</div>'
+      );
+      var ell = $('<div class="btn-group btn-group-justified"></div>');
+      $('<div class="btn-group" role="group"></div>')
+        .append($('<button type="button" class="btn btn-lg">Practice x1</button>')
+          .css('color', '#FFFFFF')
+          .css('background-color', '#F0AD4E')
+          .css('border-color', '#EEA236')
+          .click(function() {
+            practice(subject, 1);
+          })
+        ).appendTo(ell);
+      $('<div class="btn-group" role="group"></div>')
+        .append($('<button type="button" class="btn btn-primary btn-lg">Practice x5</button>')
+          .click(function() {
+            practice(subject, 5);
+          })
+        ).appendTo(ell);
+      $('<div class="btn-group" role="group"></div>')
+        .append($('<button type="button" class="btn btn-lg">Practice x10</button>')
+          .css('color', '#FFFFFF')
+          .css('background-color', '#C9302C')
+          .css('border-color', '#AC2925')
+          .click(function() {
+            practice(subject, 10);
+          })
+        ).appendTo(ell);
+      el.append(ell);
+      $('<div class="panel panel-default"></div>').append(el).appendTo('#subjects');
     });
   });
 }
@@ -161,6 +185,10 @@ function getStatus(method, url, cb) {
 }
 
 function home() {
+  $.getJSON('user.php')
+  .done(function(data) {
+    $('#score').text(Math.round(data.correct / (data.correct + data.incorrect) * 100) + '% correct');
+  });
   $('#quizwebsite-login').addClass('hide');
   $('#quizwebsite-subject-modal').addClass('hide');
   $('#quizwebsite-question-modal').addClass('hide');

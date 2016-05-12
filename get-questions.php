@@ -1,5 +1,8 @@
 <?php
 
+error_reporting(E_ALL);
+ini_set("display_errors", 1);
+
 if (isset($_GET["subject"]) && !empty($_GET["subject"])) {
   $conn = new mysqli("mysql.eecs.ku.edu", "qwiley", "asdf", "qwiley");
 

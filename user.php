@@ -14,7 +14,6 @@ if($conn == false) {
 
 $result = $conn->query("SELECT * FROM 368_subjects");
 
-
 $select = $conn->prepare("SELECT incorrect_answers, correct_answers FROM 368_users WHERE user = ?");
 $select->bind_param("s", $_SESSION["login"]);
 $select->execute();

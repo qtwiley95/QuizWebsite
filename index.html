@@ -179,8 +179,9 @@
               } else {
                 $("<i class='glyphicon glyphicon-remove-circle answer-icon'></i>")
                   .appendTo(".quizz-question-answer-selected");
-                $(".quizz-question-answer-selected").addClass("quizz-question-answer-wrong");
-                $(".quizz-question-answer-selected").removeClass("quizz-question-answer-selected")
+                $(".quizz-question-answer-selected")
+                  .addClass("quizz-question-answer-wrong")
+                  .removeClass("quizz-question-answer-selected");
               }
             }, "json");
           })

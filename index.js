@@ -109,6 +109,12 @@ function practice(subject, max_results) {
 
 // called when user has successfully logged in
 function login_success() {
+  $.getJSON('user.php')
+  .done(function(data) {
+    $('#score').text(Math.round(data.correct / (data.correct + data.incorrect) * 100) + '% correct');
+    $('#user-name-nav').text(data.user);
+  });
+
   $('#quizwebsite-login').addClass('hide');
   $('#quizwebsite-subject-modal').removeClass('hide');
   $.getJSON('subjects.php')
@@ -188,12 +194,6 @@ function home() {
         login_success();
       }
     });
-
-  $.getJSON('user.php')
-  .done(function(data) {
-    $('#score').text(Math.round(data.correct / (data.correct + data.incorrect) * 100) + '% correct');
-    $('#user-name-nav').text(data.user);
-  });
 }
 
 // home link on toolbar

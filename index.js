@@ -88,7 +88,10 @@ function practice(subject, max_results) {
         '<span class="quizz-question-answer-id">' + letter +
         '.</span><span class="quizz-question-answer-answer">' + answer +
         '</span></div>')
-      .click(function() {
+      .mousedown(function(event) {
+        event.preventDefault();
+      })
+      .click(function(event) {
         if (!$('#check').hasClass('hide') && !$(this).hasClass('quizz-question-answer-wrong')) {
           $('.quizz-question-answer').removeClass('quizz-question-answer-selected');
           $(this).addClass('quizz-question-answer-selected');

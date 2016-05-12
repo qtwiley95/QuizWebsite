@@ -1,6 +1,5 @@
 <?php
 
-session_save_path("/home/falmeida/public_html/QuizWebsite/tmp");
 session_start();
 
 error_reporting(E_ALL);

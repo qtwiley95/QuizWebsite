@@ -1,5 +1,7 @@
 <?php
 
+error_reporting(E_ALL);
+ini_set("display_errors", 1);
 session_start();
 
 $conn = new mysqli("mysql.eecs.ku.edu", "qwiley", "asdf", "qwiley");
@@ -31,7 +33,7 @@ if (isset($_POST["name"]) && isset($_POST["pass"])) {
   } else {
     if(password_verify($_POST["pass"], $pass) == true) {
   	  echo "okay";
-      $_SESSION['login'] = $_POST["name"];
+      $_SESSION["login"] = $_POST["name"];
     } else {
       echo "invalid password";
     }

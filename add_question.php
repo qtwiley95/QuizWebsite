@@ -57,7 +57,7 @@
     if($conn->query($insert))
       echo "<tr><h3>Question has been added.</h3></tr>";
     else {
-        echo "<tr><h3>Question has NOT been added. Please check again your input.</h3></tr>";
+        echo "<tr><h3>Question has NOT been added. You may have entered some special characters.</h3></tr>";
     }
     echo "</table>";
 

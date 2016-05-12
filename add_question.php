@@ -63,11 +63,11 @@
 
     //check if subject exists in database [subjects]
     $subject = $_POST["subject"];
-    $check = "SELECT user_id FROM subjects";
+    $check = "SELECT subject FROM 368_subjects";
     $boolAnswer = true;
     if($result = $conn->query($check)){
       while($row = $result -> fetch_assoc ()){
-        $subject_name = $row ["user_id"];
+        $subject_name = $row ["subject"];
         if($subject_name == $subject){
           $boolAnswer = false;
         }

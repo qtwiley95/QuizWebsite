@@ -98,23 +98,24 @@
    </header>
 
  <body>
-
-   <p id="main">Add Questions</p>
+<center>
+   <h1 id="main">Add Questions</h1>
 
  <div id="myForm">
    <form onsubmit="return checkQuestion(this)" action="add_question.php" method="post">
    <!--  Subject: <br><input type="text" name="subject" required><br> -->
-     question: <br><input type="text" name="question" required><br>
-     correct answer: <br><input type="text" name="answer" required><br>
-     false answer 1: <br><input type="text" name="fake1" required><br>
-     false answer 2: <br><input type="text" name="fake2" required><br>
-     false answer 3: <br><input type="text" name="fake3" required><br>
-     Enter subject: <br><input type="text" name="subject" required><br>
-
+   <table>
+     <tr class ="question"><td>Question:</td><td><input type="text" size="80" name="question" required></td></tr>
+     <tr class ="correct"><td>Correct Answer: </td><td> <input type="text" size="80" name="answer" required></td></tr>
+     <tr class ="false"><td>False answer 1: </td><td> <input type="text" size="80" name="fake1" required></td></tr>
+     <tr class ="false"><td>False answer 2: </td><td> <input type="text" size="80" name="fake2" required></td></tr>
+     <tr class ="false"><td>False answer 3: </td><td> <input type="text" size="80" name="fake3" required></td></tr>
+     <tr class ="subject"><td>Enter subject: </td><td> <input type="text" size="80" name="subject" required></td></tr>
+   </table>
 
    <?php
        //display subjects in dropdown menu
-       echo "Current subjects in database: ";
+       echo "<br><font color=\"#6E6E6E\">Current subjects in database:";
        // open mysql
        $connection = new mysqli ("mysql.eecs.ku.edu", "qwiley", "asdf", "qwiley");                // check connection
        if ($connection === false) {
@@ -133,12 +134,12 @@
        $user = $row ["subject"];
        echo ($i+1). ". ". $user. " ";
      }
-
+     echo " </font>";
      // close mysql
      $connection -> close ();
 
          ?>
-
+    <br>
      <button type="submit">SUBMIT</button>
    </form>
  </div>
@@ -147,6 +148,6 @@
    The question will be added to your list of made questions.<br>
    <a href="index.html">Home Page</a>
  </p>
-
+</center>
  </body>
  </html>

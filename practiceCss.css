@@ -30,6 +30,20 @@ html{
 	background-color:#DFDFDF;
 }
 
+.correct {
+	background-color: #00FFFF;
+}
+.question {
+	background-color: #BE81F7;
+}
+.false {
+	background-color: #F5A9BC;
+}
+
+.subject {
+	background-color: #58FAAC;
+}
+/*
 table, th, td{
 	width:100%;
 	border:1px solid black;
@@ -47,7 +61,7 @@ tr:hover{
 table{
 	display:inline-block;
 }
-
+*/
 input[type="text"] {
-    width: 250px;
+    width: 800px;
 }

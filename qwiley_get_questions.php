@@ -44,7 +44,7 @@ function getQuestion($subject,$amountOfQuestions)
     shuffle($returnQuestions["answers"]);
     $returnQuestions["author"] = $row["author"];
     $returnQuestions["id"] = $row["id"];
-    array_push($out, $returnQuestions);
+    array_push($out["questions"], $returnQuestions);
   }
   $connection -> close();
 //return array containing arrays that has question, author, id, and an array of answers

@@ -36,20 +36,18 @@ $('#password-input').focus(function(event) {
 var letters = 'abcdefghijklmnopqrstuvwxyz';
 
 function practice(subject) {
+  var questions = [];
+
   function nextQuestion() {
     $('#check').removeClass('hide');
     $('#next').addClass('hide');
     $('#quizwebsite-subject-modal').addClass('hide');
-    $.getJSON('get-questions.php?subject=' + subject.subject)
-    .done(function(data) {
-      $('#quizwebsite-question-modal').removeClass('hide');
-      if (data.questions.length > 0) {
-        loadQuestion(data.questions[0]);
-      } else {
-        home();
-        alert('No questions for that subject!');
-      }
-    });
+    $('#quizwebsite-question-modal').removeClass('hide');
+    if (questions.length > 0) {
+      loadQuestion(questions.pop());
+    } else {
+      home();
+    }
   }
 
   $('#next').off('click');
@@ -94,7 +92,11 @@ function practice(subject) {
     $('#quizz-question-header').text(question.question);
   }
 
-  nextQuestion();
+  $.getJSON('get-questions.php?max_results=5&subject=' + subject.subject)
+  .done(function(data) {
+    questions = data.questions;
+    nextQuestion();
+  });
 }
 
 function login_success() {

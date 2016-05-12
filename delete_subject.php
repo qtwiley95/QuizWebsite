@@ -1,7 +1,7 @@
 <?php
 function deleteSubject($subject){
   //will not delete the base 3 subjects.
-  if($subject === "math" || $subject === "science" || $subject === "biology"){
+  if($subject === "math" || $subject === "science" || $subject === "biology" || $subject === "GRE vocabulary"){
     echo "unable to delete this subject";
     exit;
   }
@@ -21,4 +21,23 @@ function deleteSubject($subject){
 
   $connection -> close();
 }
+
+if(isset($_POST['subDelete'])){
+  $sub = $_POST['subDelete'];
+  echo "deleting subject, $sub";
+  deleteSubject($sub);
+}
+
 ?>
+
+<html>
+<head>
+</head>
+<body>
+  <form action="?" method="post">
+    subject to delete:<input type="text" name="subDelete" required>
+     <button type="submit">SUBMIT</button>
+  </form>
+  <a href="/index.html">HomePage</a>
+</body>
+</html>

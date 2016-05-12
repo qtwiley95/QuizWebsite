@@ -28,7 +28,7 @@
       return $data;
     }
     /*
-    trim the user input to prevent injection
+    trim the user input to prevent insertion
     -user has already been trimmed on initialization
     */
     $subject = force_input($subject);

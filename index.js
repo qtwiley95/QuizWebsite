@@ -96,6 +96,9 @@ function practice(subject) {
   .done(function(data) {
     questions = data.questions;
     nextQuestion();
+    if (questions.length == 0) {
+      alert("no questions for that subject");
+    }
   });
 }
 

@@ -4,7 +4,7 @@ session_start();
 error_reporting(E_ALL);
 ini_set("display_errors", 1);
 
-if (isset($_POST["id"]) && !empty($_POST["id"]) && isset($_POST['answer']) && !empty($_POST["answer"]) && isset($_SESSION["login"])) {
+if (isset($_POST["id"]) && !empty($_POST["id"]) && isset($_POST['answer']) && isset($_SESSION["login"])) {
   $conn = new mysqli("mysql.eecs.ku.edu", "qwiley", "asdf", "qwiley");
 
   if($conn == false) {

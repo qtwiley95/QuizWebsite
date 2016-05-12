@@ -95,9 +95,11 @@ function practice(subject) {
   $.getJSON('get-questions.php?max_results=5&subject=' + subject.subject)
   .done(function(data) {
     questions = data.questions;
-    nextQuestion();
     if (questions.length == 0) {
+      home();
       alert("no questions for that subject");
+    } else {
+      nextQuestion();
     }
   });
 }

@@ -46,8 +46,8 @@ function practice(subject) {
       if (data.questions.length > 0) {
         loadQuestion(data.questions[0]);
       } else {
-        alert('No questions for that subject!');
         home();
+        alert('No questions for that subject!');
       }
     });
   }

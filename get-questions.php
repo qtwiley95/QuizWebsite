@@ -41,7 +41,7 @@ if (isset($_GET["subject"]) && !empty($_GET["subject"])) {
   }
 
   header('Content-Type: application/json');
-  echo json_encode(getQuestions($_GET["subject"], $max_results));
+  echo json_encode(getQuestions($conn,$_GET["subject"],$max_results));
 
 } else {
   echo "ERROR: Bad request.";

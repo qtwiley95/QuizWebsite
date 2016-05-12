@@ -38,6 +38,6 @@ if(isset($_POST['subDelete'])){
     subject to delete:<input type="text" name="subDelete" required>
      <button type="submit">SUBMIT</button>
   </form>
-  <a href="/index.html">HomePage</a>
+  <a href="index.html">HomePage</a>
 </body>
 </html>

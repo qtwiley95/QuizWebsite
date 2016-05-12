@@ -1,5 +1,6 @@
 <?php
 
+session_save_path("/home/falmeida/public_html/QuizWebsite/tmp");
 session_start();
 
 error_reporting(E_ALL);
@@ -22,17 +23,19 @@ if (isset($_GET["subject"]) && !empty($_GET["subject"])) {
   function getQuestions($db,$subject,$maxResults)
   {
     $sql = "SELECT * FROM 368_questions WHERE subject = '$subject' ORDER BY RAND() LIMIT $maxResults";
-    $questions =  $db->query($sql)->fetch_assoc();
+    $questions =  $db->query($sql);
 
     if($questions != NULL){
       $questionsArray = array("questions" => []);
-      foreach ($questions as $question) {
+      while ($question = $questions->fetch_assoc()) {
+        $answers = [$question["answer"],$question["fake1"],$question["fake2"],$question["fake3"]];
+        shuffle($answers);
         $questionsArray["questions"][] = [
           "question" => $question["question"],
-          "answers" => shuffle(["answers","fake1","fake2","fake3"]),
-          "author" => $quesiton["author"],
-          "id" => $quesiton["id"]
-        ]
+          "answers" => $answers,
+          "author" => $question["author"],
+          "id" => $question["id"]
+        ];
       }
       return $questionsArray;
     } else {

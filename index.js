@@ -115,6 +115,7 @@ function login_success() {
         '<h1>' + subject.subject + '</h1>' +
         '</div>'
       );
+      var ell = $('<div class="btn-group btn-group-justified"></div>');
       $('<div class="btn-group" role="group"></div>')
         .append($('<button type="button" class="btn btn-lg">Practice x1</button>')
           .css('color', '#FFFFFF')
@@ -123,14 +124,13 @@ function login_success() {
           .click(function() {
             practice(subject, 1);
           })
-        ).appendTo(el);
-      $('<div class="btn-group" role="group"></div>')
+        ).appendTo(ell);
       $('<div class="btn-group" role="group"></div>')
         .append($('<button type="button" class="btn btn-primary btn-lg">Practice x5</button>')
           .click(function() {
             practice(subject, 5);
           })
-        ).appendTo(el);
+        ).appendTo(ell);
       $('<div class="btn-group" role="group"></div>')
         .append($('<button type="button" class="btn btn-lg">Practice x10</button>')
           .css('color', '#FFFFFF')
@@ -139,7 +139,8 @@ function login_success() {
           .click(function() {
             practice(subject, 10);
           })
-        ).appendTo(el);
+        ).appendTo(ell);
+      el.append(ell);
       $('<div class="panel panel-default"></div>').append(el).appendTo('#subjects');
     });
   });

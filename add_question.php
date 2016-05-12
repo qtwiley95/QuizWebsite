@@ -10,7 +10,7 @@
 
   error_reporting(E_ALL);
   ini_set("display_errors", 1);
-
+  echo "<center>";
   function add_question()
   {
 
@@ -38,10 +38,10 @@
     $fake2 = force_input($fake2);
     $fake3 = force_input($fake3);
     $author = $_SESSION['login'];
-
-    echo "(" . $author . ", " . $subject . ", " . $question . ", " . $answer . ", " . $fake1 . ", " . $fake2 . ", " . $fake3 . ")<br>";
-
-
+    echo "<table>";
+    echo "<tr><td>Author: </td><td>" . $author . "</td></tr><tr><td>Subject: </td><td>" . $subject . "</td></tr><tr><td>Question: </td><td>";
+    echo $question . "</td></tr><tr><td>Answer: </td><td> " . $answer . "</td></tr><tr><td>Fake1: </td><td>" . $fake1 . "</td></tr><tr><td>Fake2: </td><td> ";
+    echo $fake2 . "</td></tr><tr><td>Fake3: </td><td> " . $fake3 . "</td></tr>";
 
     $conn = new mysqli ("mysql.eecs.ku.edu", "qwiley", "asdf", "qwiley");
 
@@ -55,21 +55,19 @@
 
     $insert = "INSERT INTO 368_questions (author, subject, question, answer, fake1, fake2, fake3) VALUES ('$author','$subject','$question','$answer','$fake1','$fake2','$fake3')";
     if($conn->query($insert))
-      echo "question has been added to table 368_questions";
+      echo "<tr><h3>Question has been added.</h3></tr>";
     else {
-        echo "question has NOT been added to table 368_questions";
+        echo "<tr>Question has NOT been added. Please check again your input.</tr>";
     }
-
+    echo "</table>";
 
     //check if subject exists in database [subjects]
     $subject = $_POST["subject"];
-    echo "<br>". $subject;
     $check = "SELECT user_id FROM subjects";
     $boolAnswer = true;
     if($result = $conn->query($check)){
       while($row = $result -> fetch_assoc ()){
         $subject_name = $row ["user_id"];
-        echo $subject_name;
         if($subject_name == $subject){
           $boolAnswer = false;
         }
@@ -79,10 +77,8 @@
     if($boolAnswer){
       $insert = "INSERT INTO subjects (user_id) VALUES ('$subject')";
       $insert2 = "INSERT INTO 368_subjects (subject) VALUES ('$subject')";
-      if($conn->query($insert))
-        echo "Subject inserted!";
-      if($conn->query($insert2))
-        echo "Subject inserted! (2)";
+      $conn->query($insert);
+      $conn->query($insert2);
     }
     //end checking
 
@@ -94,6 +90,7 @@
   if (isset($_POST['question']) && isset($_POST['answer']) && isset($_POST['fake1']) && isset($_POST['fake2']) && isset($_POST['fake3']) && isset($_POST['subject'])) {
       add_question();
   }
+  echo "</center>";
 ?>
 
 

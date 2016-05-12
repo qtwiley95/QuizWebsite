@@ -13,38 +13,36 @@ if (isset($_POST["id"]) && !empty($_POST["id"]) && isset($_POST['answer']) && !e
     exit();
   }
 
-  $select = $conn->prepare("SELECT answer FROM 368_questions WHERE id = ?");
-  $select->bind_param("s", $_POST["id"]);
-  $select->execute();
-  $select->bind_result($answer);
-  $select->fetch();
-  $select->close();
-
-  $isCorrect = ($answer == $_POST["answer"]);
-
-  if ($isCorrect) {
-    $update = $conn->prepare("UPDATE 368_users SET correct_answers = correct_answers + 1 WHERE user = ?");
-    $update->bind_param("s", $_SESSION["login"]);
-    $update->execute();
-    $update->close();
-  } else {
-    $update = $conn->prepare("UPDATE 368_users SET incorrect_answers = incorrect_answers + 1 WHERE user = ?");
-    $update->bind_param("s", $_SESSION["login"]);
-    $update->execute();
-    $update->close();
+  function handleValidation($db,$questionId,$givenAnswer) {
+  	 $isCorrect = validateAnswer($db,$questionId,$givenAnswer);
+ 	 $isCorrect ? addCorrect($db,$_SESSION["login"]) : addIncorrect($db,$_SESSION["login"]);
+ 	 $performance = getPerformance($db,$_SESSION["login"]);
+ 	 $out = array("success" => $isCorrect, "correct" => intval($performance["correct_answers"]), "incorrect" => intval($performance["incorrect_answers"]));
+ 	 return $out;
   }
 
-  $select = $conn->prepare("SELECT incorrect_answers, correct_answers FROM 368_users WHERE user = ?");
-  $select->bind_param("s", $_SESSION["login"]);
-  $select->execute();
-  $select->bind_result($incorrect_answers, $correct_answers);
-  $select->fetch();
-  $select->close();
+  function validateAnswer($db,$id,$given) {
+  	 $sql = "SELECT answer FROM 368_questions WHERE id = $id";
+  	 $answer =  $db->query($sql)->fetch_assoc();
+  	 return $answer["answer"] == $given;
+  }
 
-  $out = array("success" => $isCorrect, "correct" => $correct_answers, "incorrect" => $incorrect_answers);
+  function addCorrect($db,$user){
+  	 $db->query("UPDATE 368_users SET correct_answers = correct_answers + 1 WHERE user = '$user'");
+  }
+
+  function addIncorrect($db,$user){
+  	 $db->query("UPDATE 368_users SET incorrect_answers = incorrect_answers + 1 WHERE user = '$user'");
+  }
+
+  function getPerformance($db,$user) {
+	 $sql = "SELECT incorrect_answers, correct_answers FROM 368_users WHERE user = '$user'";
+  	 $performance = $db->query($sql)->fetch_assoc();
+  	 return $performance;
+  }
 
   header('Content-Type: application/json');
-  echo json_encode($out);
+  echo json_encode(handleValidation($conn,$_POST["id"],$_POST["answer"]));
 
   $conn->close();
 }else{

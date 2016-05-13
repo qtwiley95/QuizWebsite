@@ -13,14 +13,14 @@
   echo "<center>";
   function add_question()
   {
-
+//retrieve data from $_POST array 
     $question = $_POST["question"];
     $answer = $_POST["answer"];
     $fake1 = $_POST["fake1"];
     $fake2 = $_POST["fake2"];
     $fake3 = $_POST["fake3"];
     $subject = $_POST["subject"];
-
+//this function will prevent injection
     function force_input($data) {
       $data = trim($data);
       $data = stripslashes($data);
@@ -38,6 +38,7 @@
     $fake2 = force_input($fake2);
     $fake3 = force_input($fake3);
     $author = $_SESSION['login'];
+    //print table of the user input, shows user that it will be
     echo "<table>";
     echo "<tr><td>Author: </td><td>" . $author . "</td></tr><tr><td>Subject: </td><td>" . $subject . "</td></tr><tr><td>Question: </td><td>";
     echo $question . "</td></tr><tr><td>Answer: </td><td> " . $answer . "</td></tr><tr><td>Fake1: </td><td>" . $fake1 . "</td></tr><tr><td>Fake2: </td><td> ";
@@ -47,12 +48,13 @@
 
     if($conn == false)
     {
+      //if unable to connect
       echo "connection failed";
       $conn -> close();
       exit();
     }
 
-
+//put values into the database, table 368_questions
     $insert = "INSERT INTO 368_questions (author, subject, question, answer, fake1, fake2, fake3) VALUES ('$author','$subject','$question','$answer','$fake1','$fake2','$fake3')";
     if($conn->query($insert))
       echo "<tr><h3>Question has been added.</h3></tr>";
@@ -73,11 +75,9 @@
         }
       }
     }
-
+//if the subject does not exist then create new subject in the 368_subjects table
     if($boolAnswer){
-      //$insert = "INSERT INTO subjects (user_id) VALUES ('$subject')";
       $insert2 = "INSERT INTO 368_subjects (subject) VALUES ('$subject')";
-      //$conn->query($insert);
       $conn->query($insert2);
     }
     //end checking
@@ -87,6 +87,7 @@
   }
 
 
+//if the post array has the entries from the form then call add question function.
   if (isset($_POST['question']) && isset($_POST['answer']) && isset($_POST['fake1']) && isset($_POST['fake2']) && isset($_POST['fake3']) && isset($_POST['subject'])) {
       add_question();
   }
@@ -106,7 +107,7 @@
 
  <div id="myForm">
    <form onsubmit="return checkQuestion(this)" action="add_question.php" method="post">
-   <!--  Subject: <br><input type="text" name="subject" required><br> -->
+   <!--  create form for users to fill our in order to create question, and store it in $_POST, and reload this page -->
    <table>
      <tr class ="question"><td>Question:</td><td><input type="text" size="80" name="question" required></td></tr>
      <tr class ="correct"><td>Correct Answer: </td><td> <input type="text" size="80" name="answer" required></td></tr>

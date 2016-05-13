@@ -33,7 +33,7 @@ if (isset($_GET["subject"]) && !empty($_GET["subject"])) {
    *
    * @param msqli_connection $db
    * @param string           $subject
-   * @param int              @maxResults
+   * @param int              $maxResults
    * @return Array
    */
   function getQuestions($db,$subject,$maxResults)

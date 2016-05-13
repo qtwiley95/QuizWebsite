@@ -97,61 +97,82 @@
 
  <DOCTYPE html>
  <html>
-   <header>
-     <link rel="stylesheet" type="text/css" href="practiceCss.css">
-   </header>
+   <head>
+     <meta charset='utf-8'>
+     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+     <meta name='viewport' content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no'>
+     <title>Quiz Website - Add Question</title>
+     <link rel='stylesheet' href='css/bootstrap.min.css'>
+   </head>
 
  <body>
-<center>
+
+   <!-- toolbar with home link and correct score -->
+   <nav class="navbar navbar-default">
+     <div class="container-fluid">
+       <div class="navbar-header">
+         <a class="navbar-brand" href="." id="home">QuizzWebsite</a>
+       </div>
+
+       <!-- change questions -->
+       <ul class="nav navbar-nav navbar-left">
+         <li><a href="add_question.php">Add Question</a></li>
+         <li><a href="delete_subject.php">Delete Subject</a></li>
+       </ul>
+
+     </div>
+   </nav>
+
+  <div class="container">
    <h1 id="main">Add Questions</h1>
 
- <div id="myForm">
-   <form onsubmit="return checkQuestion(this)" action="add_question.php" method="post">
-   <!--  create form for users to fill our in order to create question, and store it in $_POST, and reload this page -->
-   <table>
-     <tr class ="question"><td>Question:</td><td><input type="text" size="80" name="question" required></td></tr>
-     <tr class ="correct"><td>Correct Answer: </td><td> <input type="text" size="80" name="answer" required></td></tr>
-     <tr class ="false"><td>False answer 1: </td><td> <input type="text" size="80" name="fake1" required></td></tr>
-     <tr class ="false"><td>False answer 2: </td><td> <input type="text" size="80" name="fake2" required></td></tr>
-     <tr class ="false"><td>False answer 3: </td><td> <input type="text" size="80" name="fake3" required></td></tr>
-     <tr class ="subject"><td>Enter subject: </td><td> <input type="text" size="80" name="subject" required></td></tr>
-   </table>
+   <div id="myForm">
+     <form onsubmit="return checkQuestion(this)" action="add_question.php" method="post">
+     <!--  create form for users to fill our in order to create question, and store it in $_POST, and reload this page -->
+     <table>
+       <tr class ="question"><td>Question:</td><td><input type="text" size="80" name="question" required></td></tr>
+       <tr class ="correct"><td>Correct Answer: </td><td> <input type="text" size="80" name="answer" required></td></tr>
+       <tr class ="false"><td>False answer 1: </td><td> <input type="text" size="80" name="fake1" required></td></tr>
+       <tr class ="false"><td>False answer 2: </td><td> <input type="text" size="80" name="fake2" required></td></tr>
+       <tr class ="false"><td>False answer 3: </td><td> <input type="text" size="80" name="fake3" required></td></tr>
+       <tr class ="subject"><td>Enter subject: </td><td> <input type="text" size="80" name="subject" required></td></tr>
+     </table>
 
-   <?php
-       //display subjects in dropdown menu
-       echo "<br><font color=\"#6E6E6E\">Current subjects in database:";
-       // open mysql
-       $connection = new mysqli ("mysql.eecs.ku.edu", "qwiley", "asdf", "qwiley");                // check connection
-       if ($connection === false) {
-         echo "connect failed";
-         exit ();
+     <?php
+         //display subjects in dropdown menu
+         echo "<br><font color=\"#6E6E6E\">Current subjects in database:";
+         // open mysql
+         $connection = new mysqli ("mysql.eecs.ku.edu", "qwiley", "asdf", "qwiley");                // check connection
+         if ($connection === false) {
+           echo "connect failed";
+           exit ();
+         }
+
+       // get table of users
+       $select = "SELECT subject FROM 368_subjects";
+       $result = $connection -> query ($select);
+       $num = $result -> num_rows;
+
+       // print table of users
+       for ($i = 0; $i < $num; $i++) {
+         $row = $result -> fetch_assoc ();
+         $user = $row ["subject"];
+         echo ($i+1). ". ". $user. " ";
        }
+       echo " </font>";
+       // close mysql
+       $connection -> close ();
 
-     // get table of users
-     $select = "SELECT subject FROM 368_subjects";
-     $result = $connection -> query ($select);
-     $num = $result -> num_rows;
+           ?>
+      <br>
+       <button type="submit">SUBMIT</button>
+     </form>
+   </div>
 
-     // print table of users
-     for ($i = 0; $i < $num; $i++) {
-       $row = $result -> fetch_assoc ();
-       $user = $row ["subject"];
-       echo ($i+1). ". ". $user. " ";
-     }
-     echo " </font>";
-     // close mysql
-     $connection -> close ();
-
-         ?>
-    <br>
-     <button type="submit">SUBMIT</button>
-   </form>
- </div>
-
- <p id="second">
-   The question will be added to your list of made questions.<br>
-   <a href="index.html">Home Page</a>
- </p>
-</center>
+   <p id="second">
+     The question will be added to your list of made questions.<br>
+     <a href="index.html">Home Page</a>
+   </p>
+  </div>
  </body>
  </html>

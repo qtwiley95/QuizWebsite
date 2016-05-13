@@ -13,11 +13,15 @@
   background-color: #f2f2f2;
 }
 
+.quizz-question-answer:hover {
+  background-color: #ddd;
+}
+
 /* added on top of individual answer when selected */
-.quizz-question-answer-selected {
+.quizz-question-answer-selected, .quizz-question-answer-selected:hover {
   background-color: #008D24;
 }
-.quizz-question-answer-wrong {
+.quizz-question-answer-wrong, .quizz-question-answer-wrong:hover {
   background-color: #B93400;
 }
 

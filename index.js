@@ -171,10 +171,7 @@ function login_success() {
 
       // pracitce modes
       $('<div class="btn-group" role="group"></div>')
-        .append($('<button type="button" class="btn btn-lg">Practice x1</button>')
-          .css('color', '#FFFFFF')
-          .css('background-color', '#F0AD4E')
-          .css('border-color', '#EEA236')
+        .append($('<button type="button" class="btn btn-warning btn-lg">Practice x1</button>')
           .click(function() {
             practice(subject, 1);
           })
@@ -186,10 +183,7 @@ function login_success() {
           })
         ).appendTo(ell);
       $('<div class="btn-group" role="group"></div>')
-        .append($('<button type="button" class="btn btn-lg">Practice x10</button>')
-          .css('color', '#FFFFFF')
-          .css('background-color', '#C9302C')
-          .css('border-color', '#AC2925')
+        .append($('<button type="button" class="btn btn-danger btn-lg">Practice x10</button>')
           .click(function() {
             practice(subject, 10);
           })

@@ -40,13 +40,35 @@ if(isset($_POST['subDelete'])){
 
 <html>
 <head>
+  <meta charset='utf-8'>
+  <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+  <meta name='viewport' content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no'>
+  <title>Quiz Website - Delete Subject</title>
+  <link rel='stylesheet' href='css/bootstrap.min.css'>
 </head>
 <body>
-  <!-- create very basic form that will reload same page and will fill $_POST upon submitting -->
-  <form action="?" method="post">
-    subject to delete:<input type="text" name="subDelete" required>
-     <button type="submit">SUBMIT</button>
-  </form>
-  <a href="index.html">HomePage</a>
+  <!-- toolbar with home link and correct score -->
+  <nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="." id="home">QuizzWebsite</a>
+      </div>
+
+      <!-- change questions -->
+      <ul class="nav navbar-nav navbar-left">
+        <li><a href="add_question.php">Add Question</a></li>
+        <li><a href="delete_subject.php">Delete Subject</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="container">
+    <!-- create very basic form that will reload same page and will fill $_POST upon submitting -->
+    <form action="?" method="post">
+      <h3>subject to delete:</h3><input type="text" name="subDelete" required>
+       <button type="submit">SUBMIT</button>
+    </form>
+    <a href="index.html">HomePage</a>
+  </div>
 </body>
 </html>

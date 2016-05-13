@@ -9,17 +9,25 @@
     <link rel='stylesheet' href='index.css'>
   </head>
   <body>
+    <!-- toolbar with home link and correct score -->
     <nav class="navbar navbar-default">
       <div class="container-fluid">
         <div class="navbar-header">
           <a class="navbar-brand" href="." id="home">QuizzWebsite</a>
         </div>
+
+        <!-- change questions -->
         <ul class="nav navbar-nav navbar-left">
           <li><a href="add_question.php">Add Question</a></li>
           <li><a href="delete_subject.php">Delete Subject</a></li>
         </ul>
+
         <ul class="nav navbar-nav navbar-right">
+
+          <!-- score updated by ajax -->
           <li><a id="score" href="performance.php"></a></li>
+
+          <!-- show current user -->
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span id="user-name-nav"></span><span class="caret"></span></a>
             <ul class="dropdown-menu">
@@ -29,41 +37,59 @@
         </ul>
       </div>
     </nav>
+
     <div class='container'>
+      <!-- main start modal after login -->
       <div id='quizwebsite-subject-modal' class='hide'>
         <h1>Available subjects</h1>
         <div id="subjects"></div>
       </div>
+
+      <!-- question modal shown when in practice mode-->
       <div id='quizwebsite-question-modal' class='hide'>
+
+        <!-- holds question text -->
         <div class='quizz-question-header' id="quizz-question-header"></div>
+
+        <!-- holds answers -->
         <div class='quizz-questions' id="quizz-questions"></div>
+
+        <!-- check and next buttons -->
         <div class="row">
           <div class="col-md-2 col-md-offset-5">
             <div id="check" class="btn btn-default btn-lg btn-primary">Check <i class="glyphicon glyphicon-thumbs-up button-icon"></i></div>
             <div id="next" class="btn btn-default btn-primary btn-lg hide">Next <i class="glyphicon glyphicon-circle-arrow-right button-icon"></i></div>
           </div>
         </div>
+
+        <!-- update on num of questions -->
         <div class="row">
           <div class="col-md-2 col-md-offset-5">
             <div id="question-nums"></div>
           </div>
         </div>
       </div>
+
+      <!-- Login modal -->
       <div id='quizwebsite-login' class='hide'>
         <div class='row'>
           <h3>You are not logged in</h3>
         </div>
         <form id='login-form'>
+
+          <!-- email and password input -->
           <div class='form-group' id='email'>
-            <label for='email-input' class='control-label hide'>Email</label>
+            <label for='email-input' class='control-label'>Email</label>
             <input type='email' class='form-control' placeholder='Email address' id='email-input'>
           </div>
-          <div class='form-group hide' id='password'>
-            <label for='password-input' class='control-label hide'>Password</label>
+          <div class='form-group' id='password'>
+            <label for='password-input' class='control-label'>Password</label>
             <input type='password' class='form-control' placeholder='Password' id='password-input'>
           </div>
+
+          <!-- Login/create user -->
           <div class="row">
-            <button type='submit' class='btn btn-default hide has-spinner' id='login'>
+            <button type='submit' class='btn btn-default has-spinner' id='login'>
               <span class='spinner'><i class='icon-spin icon-refresh'></i></span>
               Login
             </button>
@@ -72,6 +98,8 @@
               Create user?
             </button>
           </div>
+
+          <!-- status infos -->
           <div id="user-not-found" class="hide alert alert-danger" role="alert">
             <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
             <span class="sr-only">Error:</span>
@@ -90,6 +118,7 @@
         </form>
       </div>
     </div>
+
     <script src='js/jquery-2.2.3.min.js'></script>
     <script src='js/bootstrap.min.js'></script>
     <script src='index.js'></script>

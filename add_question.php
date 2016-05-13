@@ -13,7 +13,7 @@
   echo "<center>";
   function add_question()
   {
-//retrieve data from $_POST array 
+//retrieve data from $_POST array
     $question = $_POST["question"];
     $answer = $_POST["answer"];
     $fake1 = $_POST["fake1"];

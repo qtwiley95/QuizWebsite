@@ -1,12 +1,11 @@
 <?php
 //ensures user is logged in, if not then it will redirect to login page
-  session_start();
   session_start ();
   if (!isset ($_SESSION['login'])) {
     header('Location: index.html');
       exit ();
   }
-  
+
 function deleteSubject($subject){
   //will not delete the base 3 subjects.
   if($subject === "math" || $subject === "science" || $subject === "biology" || $subject === "GRE vocabulary"){

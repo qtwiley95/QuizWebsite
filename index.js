@@ -52,8 +52,10 @@ function practice(subject, max_results) {
     if (questions.length > 0) {
       // load last question
       loadQuestion(questions.pop());
-      n+=1;
-      $("#question-nums").text(n + " of " + max_results + " questions");
+
+      $("#progress").css("width", n / max_results * 100 + "%");
+
+        n+=1;
     } else {
       home();
     }

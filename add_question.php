@@ -115,7 +115,7 @@
 
        <!-- change questions -->
        <ul class="nav navbar-nav navbar-left">
-         <li><a href="add_question.php">Add Question</a></li>
+         <li class="active"><a href="add_question.php">Add Question</a></li>
          <li><a href="delete_subject.php">Delete Subject</a></li>
        </ul>
 
